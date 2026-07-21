@@ -1,0 +1,11 @@
+{
+  "name": "puzzle-practice-server",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "server": "node --env-file=.env server"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
