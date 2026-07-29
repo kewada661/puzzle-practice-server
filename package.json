@@ -3,9 +3,24 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "server": "node --env-file=.env server"
+    "dev": "tsx watch --env-file=.env ./src/server.ts",
+    "build": "tsc",
+    "server": "node --env-file=.env ./dist/server.ts",
+    "generate": "node -e \"console.log(require('crypto').randomBytes(64).toString('hex'))\""
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "cookie-parser": "^1.4.7",
+    "crypto": "^1.0.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.23.1"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
   }
 }
