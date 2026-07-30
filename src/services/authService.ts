@@ -6,7 +6,7 @@ export const logIn = async (username: string, password: string) => {
   const user = await userRepo.getUserByUsername(username);
 
   if (!user || password !== user.password) {
-    throw new Error("Invalid username or password");
+    throw new Error("Invalid username or password", 200);
   }
 
   // Create a new refresh token
@@ -22,7 +22,7 @@ export const logIn = async (username: string, password: string) => {
     process.env.JWT_SECRET!,
     { 
       algorithm: "HS256",
-      expiresIn: "60s",
+      expiresIn: "15m",
     }
   )
   return {
@@ -38,12 +38,12 @@ export const logOut = (user_id: number) => {
 
 export const refreshToken = async (user_id: number, refresh_token: string) => {
   if (!refresh_token || !user_id) {
-    throw new Error("Missing user id or refresh token");
+    throw new Error("Missing user id or refresh token", 400);
   }
   const db_token = await userRepo.getRefreshTokenById(user_id);
   const hash = crypto.hash('sha1', refresh_token);
   if ((db_token === null) || db_token !== hash) {
-    throw new Error("Invalid refresh token");
+    throw new Error("Invalid refresh token", 401);
   }
 
   // Create a new refresh token
@@ -59,7 +59,7 @@ export const refreshToken = async (user_id: number, refresh_token: string) => {
     process.env.JWT_SECRET!,
     { 
       algorithm: "HS256",
-      expiresIn: "60s",
+      expiresIn: "15m",
     }
   )
   return {

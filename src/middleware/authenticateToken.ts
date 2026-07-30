@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { access } from "node:fs";
+import { handleError } from "../utils/index.js";
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   const access_token = req.cookies.access_token;
@@ -8,16 +9,15 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   // Verify access_token. Attempt to refresh if expired.
   try {
     if (!access_token) {
-      throw("Missing token");
+      throw new Error("Missing token", 400);
     }
     const payload = jwt.verify(access_token, process.env.JWT_SECRET!);
     if (typeof payload === "string") {
-      throw("Invalid token");
+      throw new Error("Invalid token", 401);
     }
     req.user = payload;
     next();
   } catch (error) {
-    console.error(error);
-    res.status(401).json({ message: (error instanceof Error) ? (error.message) : "Error authenticating access token" });
+    handleError(error, req, res);
   }
 }

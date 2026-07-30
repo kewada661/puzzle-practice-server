@@ -21,13 +21,19 @@ usersRouter.use(authenticateToken)
 usersRouter.get('/:user_id', userController.getProfile);
 
 usersRouter.get('/:user_id/times', userController.getTimes);
-usersRouter.post('/:user_id/times', userController.updateTimes);
+usersRouter.post('/:user_id/times', userController.postTimes);
+usersRouter.patch('/:user_id/times', userController.patchTimes);
+usersRouter.delete('/:user_id/times', userController.deleteTimes);
+
 
 usersRouter.get('/:user_id/grades', userController.getGrades);
-usersRouter.post('/:user_id/grades', userController.updateGrades);
+usersRouter.post('/:user_id/grades', userController.upsertGrades);
+usersRouter.patch('/:user_id/grades', userController.upsertGrades);
 
-usersRouter.get('/:user_id/algorithm', userController.getTimes);
-usersRouter.post('/:user_id/algorithm', userController.updateAlgorithms);
+usersRouter.get('/:user_id/algorithms', userController.getAlgorithms);
+usersRouter.post('/:user_id/algorithms', userController.postAlgorithms);
+usersRouter.patch('/:user_id/algorithms', userController.patchAlgorithms)
+usersRouter.delete('/:user_id/algorithms', userController.deleteAlgorithms)
 
 // usersRouter.get('/:user_id/times', async (req, res) => {
 //   console.log('GET: /times');
