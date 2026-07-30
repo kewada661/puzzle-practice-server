@@ -1,7 +1,13 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
-import { usersRouter, authRouter } from "./routes/index.js";
+import {
+  usersRouter,
+  authRouter,
+  algorithmsRouter,
+  gradesRouter,
+  timesRouter
+} from "./routes/index.js";
 
 const port = 5000;
 var app = express();
@@ -21,6 +27,9 @@ app.use(cookieParser());
 
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
+app.use("/algorithms", algorithmsRouter);
+app.use("/grades", algorithmsRouter);
+app.use("/times", timesRouter);
  
 
 const run = async () => {
