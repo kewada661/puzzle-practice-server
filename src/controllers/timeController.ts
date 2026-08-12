@@ -10,7 +10,7 @@ export const getTimes = async (req: Request, res: Response) => {
   const option = String(req.query.option);
   const payload = req.user;
   try {
-    const times = await timeService.getTimes(user_id, case_id, option);
+    const times = await timeService.getTimes(user_id, case_id);
     res.json(times);
   } catch (error) {
     handleError(error, req, res);
@@ -18,11 +18,25 @@ export const getTimes = async (req: Request, res: Response) => {
 }
 
 export const getAverage = async (req: Request, res: Response) => {
-  throw new Error("Function not implemented.");
+  const user_id = Number(req.cookies.user_id);
+  const case_id = Number(req.params.case_id);
+  try {
+    const average = await timeService.getAverage(user_id, case_id);
+    res.json(average[0]);
+  } catch (error) {
+    handleError(error, req, res);
+  }
 }
 
 export const getBest = async (req: Request, res: Response) => {
-  throw new Error("Function not implemented.");
+  const user_id = Number(req.cookies.user_id);
+  const case_id = Number(req.params.case_id);
+  try {
+    const best = await timeService.getBest(user_id, case_id);
+    res.json(best[0]);
+  } catch (error) {
+    handleError(error, req, res);
+  }
 }
 
 export const postTimes = async (req: Request, res: Response) => {
