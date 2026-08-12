@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
+import "./utils/handleError.js"
 import {
   usersRouter,
   authRouter,

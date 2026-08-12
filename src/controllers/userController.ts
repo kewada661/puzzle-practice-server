@@ -13,3 +13,9 @@ export const getProfile = async (req: Request, res: Response) => {
     handleError(error, req, res);
   }
 }
+
+export const postUser = async (req: Request, res: Response) => {
+  const status = 500;
+  const error = new StatusError("Function is not implemented", 500);
+  handleError(error, req, res);
+}

@@ -1,12 +1,16 @@
+import { StatusError as CustomError } from "../utils/handleError.ts";
+
 declare global {
   interface Error {
-    status: number;
+    message?: string;
+    status?: number;
   }
 
-  interface ErrorConstructor {
-    new (message?: string, status?: number): Error;
-    (message?: string, status?: number): Error;
-  }
+  declare var Error: ErrorConstructor;
+
+  type StatusError = CustomError;
+
+  var StatusError: typeof CustomError;
 }
 
 export {};

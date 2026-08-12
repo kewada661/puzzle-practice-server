@@ -1,5 +1,10 @@
 import { pool } from "./database.js";
 
+export interface Grade {
+  user_id: number;
+  case_id: number;
+  grade: number;
+}
 export const upsertGrades = async (user_id: number, case_id: number, grade: number) => {
   pool.query(
     `

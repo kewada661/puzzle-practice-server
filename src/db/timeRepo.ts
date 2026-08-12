@@ -3,7 +3,8 @@ import { pool } from "./database.js";
 export interface Time {
   ms_elapsed: number,
   user_id: number,
-  case_id: number
+  case_id: number,
+  time_id: number,
 }
 export const getTimesById = async (user_id: number) => {
   const [result] = await pool.query(

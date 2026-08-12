@@ -3,6 +3,7 @@ import { pool } from "./database.js";
 export interface algorithm {
   user_id: number;
   case_id: number;
+  alg_id: number;
   algorithm: string;
 }
 export const getAlgorithmsByCaseID = async (user_id: number, case_id: number) => {

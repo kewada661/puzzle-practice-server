@@ -16,6 +16,8 @@ const usersRouter = express.Router();
 //   }
 // });
 
+usersRouter.post('/', userController.postUser);
+
 usersRouter.use(authenticateToken)
 
 usersRouter.get('/:user_id', userController.getProfile);
