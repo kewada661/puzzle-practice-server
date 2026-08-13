@@ -6,7 +6,7 @@ export const logIn = async (username: string, password: string) => {
   const user = await userRepo.getUserByUsername(username);
 
   if (!user || password !== user.password) {
-    throw new StatusError("Invalid username or password", 200);
+    throw new StatusError("Invalid username or password", 401);
   }
 
   // Create a new refresh token
