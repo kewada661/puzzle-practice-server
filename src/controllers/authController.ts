@@ -29,7 +29,7 @@ export const logOut = (req: Request, res: Response) => {
     res.clearCookie("user_id")
     .clearCookie("access_token")
     .clearCookie("refresh_token")
-    .sendStatus(200);
+    .json({message: "OK"})
   } catch (error) {
     handleError(error, req, res);
   }
@@ -45,7 +45,7 @@ export const refresh = async (req: Request, res: Response) => {
       httpOnly: true
     }).cookie("refresh_token", result.refresh_token, {
       httpOnly: true
-    }).sendStatus(200);
+    }).json({message: "OK"});
   } catch (error) { 
     handleError(error, req, res);
   }
