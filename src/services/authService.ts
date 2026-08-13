@@ -27,6 +27,7 @@ export const logIn = async (username: string, password: string) => {
   )
   return {
     user_id: user.user_id,
+    username: user.username,
     access_token: access_token,
     refresh_token: refresh_token
   };

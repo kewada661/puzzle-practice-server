@@ -15,7 +15,10 @@ export const logIn = async (req: Request, res: Response) => {
       httpOnly: true 
     }).cookie("refresh_token", result.refresh_token, {
       httpOnly: true
-    }).sendStatus(200);
+    }).json({
+      user_id: result.user_id,
+      username: req.body.username,
+    });
   } catch (error) {
     handleError(error, req, res);
   }
