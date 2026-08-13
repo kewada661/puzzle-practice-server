@@ -3,7 +3,7 @@ import { timeRepo } from "../db/index.js";
 export const getTimes = async (user_id: number, case_id: number) => {
   let times;
   if (!user_id || !case_id) {
-    throw new Error("Missing user ID or case ID", 400);
+    throw new StatusError("Missing user ID or case ID", 400);
   }
   times = await timeRepo.getTimesByCaseId(user_id, case_id);
 
