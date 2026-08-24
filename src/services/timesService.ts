@@ -19,8 +19,8 @@ export const getAverage = async (user_id: number, case_id: number) => {
   }
   const avg = await timeRepo.getAverageByCaseId(user_id, case_id);
 
-  if (!avg) {
-    throw new StatusError("Average could not be found", 404);
+  if (avg.length === 0) {
+    return [{ ms_elapsed: undefined }];
   }
   return avg;
 }
@@ -31,35 +31,35 @@ export const getBest = async (user_id: number, case_id: number) => {
   }
   const best = await timeRepo.getBestByCaseId(user_id, case_id);
 
-  if (!best) {
-    throw new StatusError("Best could not be found", 404);
+  if (best.length === 0) {
+    return [{ ms_elapsed: undefined }];
   }
   return best;
 }
 
 export const postTimes = async (user_id: number, case_id: number, ms_elapsed: number) => {
   if (!user_id || !case_id) {
-    throw new StatusError ("Missing user ID or case ID", 400)
+    throw new StatusError("Missing user ID or case ID", 400)
   }
   if (Number.isNaN(ms_elapsed)) {
-    throw new StatusError ("ms_elapsed is NaN", 400);
+    throw new StatusError("ms_elapsed is NaN", 400);
   }
   timeRepo.insertTimes(user_id, case_id, ms_elapsed);
 }
 
 export const patchTimes = async (time_id: number, ms_elapsed: number) => {
   if (!time_id) {
-    throw new StatusError ("Missing time ID, user ID, or case ID", 400);
+    throw new StatusError("Missing time ID, user ID, or case ID", 400);
   }
   if (Number.isNaN(ms_elapsed)) {
-    throw new StatusError ("ms_elapsed is NaN", 400);
+    throw new StatusError("ms_elapsed is NaN", 400);
   }
   timeRepo.updateTimes(time_id, ms_elapsed);
 }
 
 export const deleteTimes = async (time_id: number) => {
   if (!time_id) {
-    throw new StatusError ("Missing time ID", 400);
+    throw new StatusError("Missing time ID", 400);
   }
   timeRepo.deleteTimes(time_id);
 }

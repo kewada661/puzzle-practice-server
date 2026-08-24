@@ -9,7 +9,7 @@ export interface algorithm {
 export const getAlgorithmsByCaseID = async (user_id: number, case_id: number) => {
   const [result] = await pool.query(
     `
-    SELECT algorithm
+    SELECT algorithm, alg_id
     FROM algorithms
     WHERE (user_id, case_id) = (?, ?)
     `,
@@ -49,8 +49,7 @@ export const updateAlgorithms = async (alg_id: number, algorithm: string) => {
 export const deleteAlgorithms = async (alg_id: number) => {
   pool.query(
     `
-    UPDATE algorithms
-    SET algorithm =  NULL
+    DELETE FROM algorithms
     WHERE alg_id = ?
     `,
     [alg_id]

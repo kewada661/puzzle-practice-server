@@ -21,7 +21,7 @@ export const postAlgorithms = async (req: Request, res: Response) => {
   const algorithm = String(req.body.algorithm);
   try {
     await algorithmService.postAlgorithms(user_id, case_id, algorithm);
-    res.sendStatus(200);
+    res.json({ message: "OK"});
   } catch (error) {
     handleError(error, req, res);
   }
@@ -32,7 +32,7 @@ export const patchAlgorithms = async (req: Request, res: Response) => {
   const algorithm = String(req.body.algorithm);
   try {
     await algorithmService.patchAlgorithms(alg_id, algorithm);
-    res.sendStatus(200);
+    res.json({ message: "OK"});
   } catch (error) {
     handleError(error, req, res);
   }
@@ -42,7 +42,7 @@ export const deleteAlgorithms = async (req: Request, res: Response) => {
   const alg_id = Number(req.params.alg_id);
   try {
     await algorithmService.deleteAlgorithms(alg_id);
-    res.sendStatus(200);
+    res.json({ message: "OK"});
   } catch (error) {
     handleError(error, req, res);
   }
