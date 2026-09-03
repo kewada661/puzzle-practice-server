@@ -34,7 +34,7 @@ app.use(cors({
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/algorithms", algorithmsRouter);
-app.use("/grades", algorithmsRouter);
+app.use("/grades", gradesRouter);
 app.use("/times", timesRouter);
 
 

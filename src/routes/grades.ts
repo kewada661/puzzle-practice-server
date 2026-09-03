@@ -6,7 +6,8 @@ const gradesRouter = express.Router();
 
 gradesRouter.use(authenticateToken);
 
-gradesRouter.get('/:case_id', gradeController.getGrades);
+gradesRouter.get('/', gradeController.getUserGrades);
+gradesRouter.get('/:case_id', gradeController.getGrade);
 gradesRouter.post('/:case_id', gradeController.upsertGrades);
 gradesRouter.patch('/:case_id', gradeController.upsertGrades);
 
