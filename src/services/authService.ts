@@ -47,6 +47,11 @@ export const refreshToken = async (user_id: number, refresh_token: string) => {
     throw new StatusError("Invalid refresh token", 401);
   }
 
+  const user = await userRepo.getUserById(user_id);
+  if (!user) {
+    throw new StatusError("Invalid user id", 401);
+  }
+
   // Create a new refresh token
   const new_refresh_token = crypto.randomBytes(64).toString('hex');
   const new_hash = crypto.hash('sha1', new_refresh_token);
@@ -65,6 +70,7 @@ export const refreshToken = async (user_id: number, refresh_token: string) => {
   )
   return {
     access_token: access_token,
-    refresh_token: new_refresh_token
+    refresh_token: new_refresh_token,
+    username: user.username
   };
 }
