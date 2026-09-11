@@ -39,6 +39,17 @@ export const getBest = async (req: Request, res: Response) => {
   }
 }
 
+export const getSnapshot = async (req: Request, res: Response) => {
+  const user_id = Number(req.cookies.user_id);
+  console.log("GET: /times/snapshot with user_id:", user_id)
+  try {
+    const snapshot = await timeService.getSnapshot(user_id);
+    res.json(snapshot);
+  } catch (error) {
+    handleError(error, req, res);
+  }
+}
+
 export const postTimes = async (req: Request, res: Response) => {
   const user_id = Number(req.cookies.user_id);
   const case_id = Number(req.params.case_id);

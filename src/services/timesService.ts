@@ -37,6 +37,15 @@ export const getBest = async (user_id: number, case_id: number) => {
   return best;
 }
 
+export const getSnapshot = async (user_id: number) => {
+  if (!user_id) {
+    throw new StatusError("Missing user ID", 400);
+  }
+  const avgs = await timeRepo.getAvgTimes(user_id);
+  const bests = await timeRepo.getBestTimes(user_id);
+  return [avgs, bests];
+}
+
 export const postTimes = async (user_id: number, case_id: number, ms_elapsed: number) => {
   if (!user_id || !case_id) {
     throw new StatusError("Missing user ID or case ID", 400)

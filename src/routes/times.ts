@@ -6,6 +6,7 @@ const timesRouter = express.Router();
 
 timesRouter.use(authenticateToken);
 
+timesRouter.get('/snapshot', timeController.getSnapshot);
 timesRouter.get('/:case_id', timeController.getTimes);
 timesRouter.get('/:case_id/average', timeController.getAverage);
 timesRouter.get('/:case_id/best', timeController.getBest);

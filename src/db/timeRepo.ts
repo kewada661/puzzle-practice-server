@@ -45,6 +45,21 @@ export const getAverageByCaseId = async (user_id: number, case_id: number) => {
   return avg;
 }
 
+export const getAvgTimes = async (user_id: number) => {
+  const [result] = await pool.query(
+    `
+    SELECT case_id, AVG(ms_elapsed) AS ms_elapsed
+    FROM times
+    WHERE user_id = ?
+    GROUP BY case_id
+    ORDER BY case_id ASC
+    `,
+    [user_id]
+  )
+  const avgs = result as Time[];
+  return avgs;
+}
+
 export const getBestByCaseId = async (user_id: number, case_id: number) => {
   const [result] = await pool.query(
     `
@@ -58,6 +73,21 @@ export const getBestByCaseId = async (user_id: number, case_id: number) => {
   )
   const best = result as Time[];
   return best;
+}
+
+export const getBestTimes = async (user_id: number) => {
+  const [result] = await pool.query(
+    `
+    SELECT case_id, MIN(ms_elapsed) AS ms_elapsed
+    FROM times
+    WHERE user_id = ?
+    GROUP BY case_id
+    ORDER BY case_id ASC
+    `,
+    [user_id]
+  )
+  const bests = result as Time[];
+  return bests;
 }
 
 export const insertTimes = async (user_id: number, case_id: number, ms_elapsed: number) => {
