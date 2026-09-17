@@ -31,9 +31,10 @@ export const upsertGrades = async (req: Request, res: Response) => {
   const user_id = Number(req.cookies.user_id);
   const case_id = Number(req.params.case_id);
   const grade = Number(req.body.grade);
+
   try {
     await gradeService.upsertGrades(user_id, case_id, grade);
-    res.sendStatus(200);
+    res.json({ message: "OK" });
   } catch (error) {
     handleError(error, req, res);
   }

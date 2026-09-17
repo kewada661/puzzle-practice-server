@@ -20,7 +20,7 @@ export const getGradesByCaseID = async (user_id: number, case_id: number) => {
   )
 
   const grades = result as Grade[];
-  return grades;
+  return grades[0] ?? null;
 }
 
 export const getGradesByUserID = async (user_id: number) => {

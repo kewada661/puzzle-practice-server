@@ -56,7 +56,7 @@ export const postTimes = async (req: Request, res: Response) => {
   const ms_elapsed = Number(req.body.ms_elapsed);
   try {
     await timeService.postTimes(user_id, case_id, ms_elapsed);
-    res.sendStatus(200);
+    res.json({ message: "OK" });
   } catch (error) {
     handleError(error, req, res);
   }
@@ -67,7 +67,7 @@ export const patchTimes = async (req: Request, res: Response) => {
   const ms_elapsed = Number(req.body.ms_elapsed);
   try {
     await timeService.patchTimes(time_id, ms_elapsed);
-    res.sendStatus(200);
+    res.json({ message: "OK" });
   } catch (error) {
     handleError(error, req, res);
   }
@@ -77,7 +77,7 @@ export const deleteTimes = async (req: Request, res: Response) => {
   const time_id = Number(req.params.time_id);
   try {
     await timeService.deleteTimes(time_id);
-    res.sendStatus(200);
+    res.json({ message: "OK" });
   } catch (error) {
     handleError(error, req, res);
   }
