@@ -9,11 +9,11 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   // Verify access_token. Attempt to refresh if expired.
   try {
     if (!access_token) {
-      throw new Error("Missing token", 400);
+      throw new StatusError("Missing token", 400);
     }
     const payload = jwt.verify(access_token, process.env.JWT_SECRET!);
     if (typeof payload === "string") {
-      throw new Error("Invalid token", 401);
+      throw new StatusError("Invalid token", 401);
     }
     req.user = payload;
     next();

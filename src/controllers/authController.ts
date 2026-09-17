@@ -12,10 +12,13 @@ export const logIn = async (req: Request, res: Response) => {
     res.cookie("user_id", result.user_id, {
       httpOnly: true
     }).cookie("access_token", result.access_token, {
-      httpOnly: true 
+      httpOnly: true
     }).cookie("refresh_token", result.refresh_token, {
       httpOnly: true
-    }).sendStatus(200);
+    }).json({
+      user_id: result.user_id,
+      username: req.body.username,
+    });
   } catch (error) {
     handleError(error, req, res);
   }
@@ -24,9 +27,9 @@ export const logIn = async (req: Request, res: Response) => {
 export const logOut = (req: Request, res: Response) => {
   try {
     res.clearCookie("user_id")
-    .clearCookie("access_token")
-    .clearCookie("refresh_token")
-    .sendStatus(200);
+      .clearCookie("access_token")
+      .clearCookie("refresh_token")
+      .json({ message: "OK" })
   } catch (error) {
     handleError(error, req, res);
   }
@@ -42,8 +45,10 @@ export const refresh = async (req: Request, res: Response) => {
       httpOnly: true
     }).cookie("refresh_token", result.refresh_token, {
       httpOnly: true
-    }).sendStatus(200);
-  } catch (error) { 
+    }).json({
+      username: result.username
+    });
+  } catch (error) {
     handleError(error, req, res);
   }
 }

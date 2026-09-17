@@ -1,9 +1,17 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
-import { usersRouter, authRouter } from "./routes/index.js";
+import cors from "cors";
+import "./utils/handleError.js"
+import {
+  usersRouter,
+  authRouter,
+  algorithmsRouter,
+  gradesRouter,
+  timesRouter
+} from "./routes/index.js";
 
-const port = 5000;
+const port = process.env.PORT;
 var app = express();
 
 // if (
@@ -18,10 +26,17 @@ var app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+  origin: process.env.WEBSITE,
+  credentials: true,
+}))
 
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
- 
+app.use("/algorithms", algorithmsRouter);
+app.use("/grades", gradesRouter);
+app.use("/times", timesRouter);
+
 
 const run = async () => {
   // await testConnection();

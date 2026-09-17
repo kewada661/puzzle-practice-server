@@ -6,7 +6,7 @@ export const logIn = async (username: string, password: string) => {
   const user = await userRepo.getUserByUsername(username);
 
   if (!user || password !== user.password) {
-    throw new Error("Invalid username or password", 200);
+    throw new StatusError("Invalid username or password", 401);
   }
 
   // Create a new refresh token
@@ -27,6 +27,7 @@ export const logIn = async (username: string, password: string) => {
   )
   return {
     user_id: user.user_id,
+    username: username,
     access_token: access_token,
     refresh_token: refresh_token
   };
@@ -38,12 +39,17 @@ export const logOut = (user_id: number) => {
 
 export const refreshToken = async (user_id: number, refresh_token: string) => {
   if (!refresh_token || !user_id) {
-    throw new Error("Missing user id or refresh token", 400);
+    throw new StatusError("Missing user id or refresh token", 400);
   }
   const db_token = await userRepo.getRefreshTokenById(user_id);
   const hash = crypto.hash('sha1', refresh_token);
   if ((db_token === null) || db_token !== hash) {
-    throw new Error("Invalid refresh token", 401);
+    throw new StatusError("Invalid refresh token", 401);
+  }
+
+  const user = await userRepo.getUserById(user_id);
+  if (!user) {
+    throw new StatusError("Invalid user id", 401);
   }
 
   // Create a new refresh token
@@ -64,6 +70,7 @@ export const refreshToken = async (user_id: number, refresh_token: string) => {
   )
   return {
     access_token: access_token,
-    refresh_token: new_refresh_token
+    refresh_token: new_refresh_token,
+    username: user.username
   };
 }

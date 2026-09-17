@@ -3,7 +3,8 @@ import { pool } from "./database.js";
 export interface Time {
   ms_elapsed: number,
   user_id: number,
-  case_id: number
+  case_id: number,
+  time_id: number,
 }
 export const getTimesById = async (user_id: number) => {
   const [result] = await pool.query(
@@ -29,6 +30,64 @@ export const getTimesByCaseId = async (user_id: number, case_id: number) => {
   )
   const times = result as Time[];
   return times;
+}
+
+export const getAverageByCaseId = async (user_id: number, case_id: number) => {
+  const [result] = await pool.query(
+    `
+    SELECT AVG(ms_elapsed) AS ms_elapsed
+    FROM times
+    WHERE (user_id, case_id) = (?, ?)
+    `,
+    [user_id, case_id]
+  )
+  const avg = result as Time[];
+  return avg;
+}
+
+export const getAvgTimes = async (user_id: number) => {
+  const [result] = await pool.query(
+    `
+    SELECT case_id, AVG(ms_elapsed) AS ms_elapsed
+    FROM times
+    WHERE user_id = ?
+    GROUP BY case_id
+    ORDER BY case_id ASC
+    `,
+    [user_id]
+  )
+  const avgs = result as Time[];
+  return avgs;
+}
+
+export const getBestByCaseId = async (user_id: number, case_id: number) => {
+  const [result] = await pool.query(
+    `
+    SELECT ms_elapsed
+    FROM times
+    WHERE (user_id, case_id) = (?, ?)
+    ORDER BY ms_elapsed ASC
+    LIMIT 1
+    `,
+    [user_id, case_id]
+  )
+  const best = result as Time[];
+  return best;
+}
+
+export const getBestTimes = async (user_id: number) => {
+  const [result] = await pool.query(
+    `
+    SELECT case_id, MIN(ms_elapsed) AS ms_elapsed
+    FROM times
+    WHERE user_id = ?
+    GROUP BY case_id
+    ORDER BY case_id ASC
+    `,
+    [user_id]
+  )
+  const bests = result as Time[];
+  return bests;
 }
 
 export const insertTimes = async (user_id: number, case_id: number, ms_elapsed: number) => {

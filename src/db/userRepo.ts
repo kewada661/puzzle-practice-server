@@ -11,7 +11,7 @@ export interface User {
 export const getUserById = async (user_id: number) => {
   const [result] = await pool.query(
 		`
-    SELECT user_id, username, email
+    SELECT user_id, username
     FROM users
     WHERE user_id = ?
 		`,
